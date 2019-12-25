@@ -1,0 +1,13 @@
+
+.deluser{
+    margin-top: 30px;
+    line-height: 20px;
+}
+.deluser input{
+    width: 30px;
+}
+.deluser button{
+    background-color: red;
+    color: white;
+    border: none;
+}

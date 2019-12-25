@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset='utf-8'>
+<link rel="stylesheet" type="text/css" href="./css/user.css" >
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <script src="js/popper.min.js"></script>	
+<title></title>
+</head>
+<style>
+	.body{
+		padding-left: 10px;
+	}
+	.tit{
+        line-height: 30px;
+    }
+    tr{
+        height: 40px;
+        overflow: hidden;
+        font-size: 13px;
+	}
+	.user-table{
+    	height: 300px;
+    	overflow-x: hidden;
+    	overflow-y: scroll;
+	}
+
+</style>
+<body>
+	<div class="tit">
+		<span>注册用户列表</span>
+	</div>
+	<div class="user-table" style="width:100%">
+			<table cellspacing="0" border="1px" style="width:100%;text-align: center;">
+					<tr>
+						<td>id</td>
+						<td>用户名</td>
+						<td>用户密码</td>
+					</tr>
+			</table>
+	</div>
+	
+	<div class="deluser">
+		<div>删除用户：<input type="text" name="thisid" id='thisid'> <button class="submit">确认</button></div>
+	</div>
+<script src='comment.js'></script>
+<script src="js/jquery.min.js"></script>
+<script>
+		window.onload=function(){
+			var xhr=Xhr();
+			xhr.onreadystatechange=function(){
+			if (xhr.readyState==4&&xhr.status==200){
+				var res=JSON.parse(xhr.response);
+				console.log(res);
+				for(var i=0;i<res.length;i++){
+					var usertr="<tr><td>"+res[i].id+"</td><td>"+res[i].username+"</td><td>"+res[i].userpwd+"</td></tr>";
+					$('table').append(usertr);
+				}
+				}
+			}
+			xhr.open('get','/getuser',true);
+			xhr.send(null);
+		};
+		$(function(){
+		  $(".submit").click(function(){
+			var xhr=Xhr();
+			xhr.onreadystatechange=function(){
+			if (xhr.readyState==4&&xhr.status==200){
+				var res=xhr.responseText;
+				if (res=='1')
+				{
+					alert('删除成功');
+				}else if(res=='0')
+				{alert('删除失败');}
+				else{
+				console.log(res);
+				}
+				}
+			}
+			xhr.open('post','/deluser',true);
+			xhr.setRequestHeader("Content-Type",
+			"application/x-www-form-urlencoded");
+			var thisid=$('#thisid')[0].value;						
+			var formdata='id='+thisid;
+			xhr.send(formdata);
+		})
+		})
+		
+	
+		
+	</script>	
+</body>
+</html>

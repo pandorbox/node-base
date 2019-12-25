@@ -1,0 +1,76 @@
+.top{
+    height: 40px;
+    background-color: #ccc;
+    width: 100%;
+    text-align: center;
+}
+.unshow{
+    display: none;
+}
+h5{
+    color: white;
+    line-height: 40px;
+}
+.home{
+    width: 100%;
+    display: flex;
+}
+.home-left{
+    background-color: #ccc;
+    width: 15%;
+    border: 2px solid #ccc;
+    padding-bottom: 400px;
+}
+.home-right{
+    margin-top: 2px;
+    margin-left: 2px;
+    box-shadow: 0px -1px 1px 1px rgb(48, 116, 161);
+    width: 84.8%;
+    border-bottom: none;
+    
+}
+.top-tit{
+    display: flex;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    width:100%;
+    height: 30px;
+    line-height: 30px;
+    background-color: rgb(89, 143, 214) ;
+}
+.boxs{
+    margin-top: 1px;
+    margin-left: 1px;
+    box-shadow: 0px 0px 2px 2px rgb(48, 116, 161);
+}
+.home-left-nav{
+    padding-left: 5%;
+    display: flex;
+    border: 1px solid white;
+    color: rgb(85, 50, 212);
+    background-color: rgb(127, 132, 136);
+    opacity: 0.8;
+    margin-top: 2px;
+    width: 100%;
+    line-height:30px ;
+    text-align: center;
+}
+.nav-icon{
+    margin-right: 10px;
+    margin-top: 5px;
+    width: 20px;
+    height: 20px;
+}
+.nav-user-list{
+    padding-bottom: 5px;
+    width: 100%;
+    padding-left: 30%;
+}
+.nav-user-list>div{
+    width: 100%;
+    color: green;
+    line-height: 20px;
+    margin-top: 5px;
+    font-size: 12px;
+}

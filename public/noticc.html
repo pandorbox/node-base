@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset='utf-8'>
+<link rel="stylesheet" type="text/css" href="./css/user.css" >
+<title></title>
+</head>
+<style>
+	.tit{
+        line-height: 30px;
+    }
+    tr{
+        height: 40px;
+        overflow: hidden;
+        font-size: 13px;
+	}
+	.user-table{
+    	height: 300px;
+    	overflow-x: hidden;
+    	overflow-y: scroll;
+    }
+    .inputtr>td>input{
+        width: 100%;
+        height: 30px;
+        border: none;
+        outline: medium;
+        text-align: center;
+    }
+
+</style>
+<body>
+	<div class="tit">
+		<span>公告信息列表</span>
+	</div>
+	<div class="user-table" style="width:100%">
+			<table class="listtable" cellspacing="0" border="1px" style="width:100%;text-align: center;">
+					<tr>
+						<td width="5%">id</td>
+						<td width="10%">公告标题</td>
+						<td width="85%">公告信息</td>
+					</tr>
+			</table>
+			
+	</div>
+	
+	<div class="deluser">
+        <div>修改公告：</div>
+        <table class="inputtable" cellspacing="0" border="1px" style="width:100%;text-align: center;">
+                <tr class="tittr">
+                    <td width="5%">id</td>
+                    <td width="10%">公告标题</td>
+                    <td width="85%">公告信息</td>
+                </tr>
+                <tr class="inputtr">
+                    <td><input type="text" placeholder="必填" id="id"></td>
+                    <td><input type="text" placeholder="选填" id="notictit"></td>
+                    <td><input type="text" placeholder="选填" id="noticmsg"></td>
+                </tr>
+		</table>
+		<button class="submit">提交</button>
+	</div>
+<script src='comment.js'></script>
+<script src="js/jquery.min.js"></script>
+<script>
+		window.onload=function(){
+			var xhr=Xhr();
+			xhr.onreadystatechange=function(){
+			if (xhr.readyState==4&&xhr.status==200){
+				var res=JSON.parse(xhr.response);
+				console.log(res);
+				for(var i=0;i<res.length;i++){
+					var usertr="<tr><td>"+res[i].id+"</td><td>"+res[i].notictit+"</td><td>"+res[i].noticmsg+"</td></tr>";
+					$('.listtable').append(usertr);
+				}
+				}
+			}
+			xhr.open('get','/notic',true);
+			xhr.send(null);
+		};
+		$(".submit").click(function(){
+			var xhr=Xhr();
+			xhr.onreadystatechange=function(){
+			if (xhr.readyState==4&&xhr.status==200){
+				var res=xhr.responseText;
+				if (res=='1')
+				{
+					alert('修改成功');
+				}else if(res=='0'){
+					alert('修改失败');}
+				else{
+					console.log(res);
+				}
+			}
+			}
+			xhr.open('post','/updnotic',true);
+			xhr.setRequestHeader("Content-Type",
+			"application/x-www-form-urlencoded");
+			var id = $("#id")[0].value;
+			var notictit=$('#notictit')[0].value;
+			var noticmsg=$('#noticmsg')[0].value;						
+			var formdata='id='+id+'&notictit='+notictit+'&noticmsg='+noticmsg;
+			xhr.send(formdata);
+		})
+	
+		
+	</script>	
+</body>
+</html>

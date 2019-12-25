@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset='utf-8'>
+<link rel="stylesheet" type="text/css" href="./css/user.css" >
+<title></title>
+</head>
+<style>
+	.tit{
+        line-height: 30px;
+    }
+    tr{
+        height: 40px;
+        overflow: hidden;
+        font-size: 13px;
+	}
+	.user-table{
+    	height: 300px;
+    	overflow-x: hidden;
+    	overflow-y: scroll;
+    }
+    .inputtr>td>input{
+        width: 100%;
+        height: 30px;
+        border: none;
+        outline: medium;
+        text-align: center;
+    }
+
+</style>
+<body>
+	<div class="tit">
+		<span>非推荐课程列表</span>
+	</div>
+	<div class="user-table" style="width:100%">
+			<table class="listtable" cellspacing="0" border="1px" style="width:100%;text-align: center;">
+					<tr>
+                        <td width="5%">id</td>
+                        <td width="10%">课程作者</td>
+                        <td width="10%">课程名</td>
+                        <td width="15%">课程封面</td>
+						<td width="20%">课程简介</td>
+						<td width="25%">课程概述</td>
+						<td width="5%">课程积分</td>
+					</tr>
+			</table>
+			
+	</div>
+	
+	<div class="deluser">
+		<div>添加推荐课程：<input type="text" placeholder="id" name="thisid" id='thisid'> <button class="submit">确认</button></div>
+	</div>
+<script src='comment.js'></script>
+<script src="js/jquery.min.js"></script>
+<script>
+		window.onload=function(){
+			var xhr=Xhr();
+			xhr.onreadystatechange=function(){
+			if (xhr.readyState==4&&xhr.status==200){
+				var res=JSON.parse(xhr.response);
+				console.log(res);
+				for(var i=0;i<res.length;i++){
+					var usertr="<tr class='listtr'><td>"+res[i].id+"</td><td>"+res[i].kcauthor+"</td><td>"+res[i].kcclass+"</td><td><img style='height:30px;' src='"+res[i].kcimg+"' alt=''></td><td>"+res[i].kcjj+"</td><td>"+res[i].kcmb+"</td><td>"+res[i].kcjf+"</td></tr>";
+					$('.listtable').append(usertr);
+				}
+				}
+			}
+			xhr.open('get','/getntjkechen',true);
+			xhr.send(null);
+		};
+		$(".submit").click(function(){
+			var xhr=Xhr();
+			xhr.onreadystatechange=function(){
+			if (xhr.readyState==4&&xhr.status==200){
+				var res=xhr.responseText;
+				if (res=='1')
+				{
+					alert('添加成功');
+				}else if(res=='0'){
+					alert('添加失败');}
+				else{
+					console.log(res);
+				}
+			}
+			}
+			xhr.open('post','/addtjkechen',true);
+			xhr.setRequestHeader("Content-Type",
+			"application/x-www-form-urlencoded");
+			var id = $("#thisid")[0].value;
+			var formdata='id='+id;
+			xhr.send(formdata);
+		})
+		
+	</script>	
+</body>
+</html>
